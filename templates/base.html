@@ -4,18 +4,51 @@
 	
 </head>
 <body>
-<h1> Multiplayer </h1>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+	<h1> Multiplayer </h1>
 	
-<nav>
+	<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+	<div class="message_holder"></div>
 
-       
-        <a href="#">About</a>
 
-    </nav>
+	<form action="" method="post">
+      <input type="text" class="username" placeholder="User Name"/>
+      <input type="text" class="message" placeholder="Messages"/>
+      <input type="submit"/>
+	</form>
 
-    <div class="content">
-        {% block content %} {% endblock %} 
-    </div> <!-- NOTE! content inside block content is the actual name of the block. Change this and it will route differently.-->
+	<script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+      socket.on( 'connect', function() {
+
+        
+        socket.emit( 'connected')
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          e.stopImmediatePropagation();
+
+          let user_name = $( 'input.username' ).val()
+          let user_input = $( 'input.message' ).val()
+          console.log('here')
+		
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          $( 'input.message' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.message_holder' ).append( '<div>'+msg.user_name+'</b> '+msg.message+'</div>' )
+        }
+      })
+    </script>
+   
 
 </body>
 </html>
