@@ -48,7 +48,13 @@
         }
       })
     </script>
-   
 
+	<a href="{{ url_for('chess') }}">FlaskApp</a>
+
+    <div class="content">
+        {% block content %} {% endblock %} 
+    </div> 
+  
+    <!--<iframe src="content.html" height="200" width="300" title="Iframe Example"></iframe> -->
 </body>
 </html>

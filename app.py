@@ -18,6 +18,10 @@ def home():
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
+@app.route('/chess/', methods=('GET', 'POST'))
+def chess():
+	return render_template('content.html')
+
 @socketio.on('connected')
 def connected():
 	

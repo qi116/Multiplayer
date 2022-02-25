@@ -1,8 +1,9 @@
 class Piece {
-	constructor(color, currentPosRow, currentPosCol) {
+	constructor(color, currentPosRow, currentPosCol, piece) {
 		this.color = color;
 		this.currentPosRow = currentPosRow;
 		this.currentPosCol = currentPosCol;
+		this.piece = piece
 	}
 
 	get pieceColor() {
@@ -35,42 +36,36 @@ class Piece {
 
 class Rook extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'R');
 	}
 }
 
 class Knight extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'N');
 	}
 }
 
 class Bishop extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'B');
 	}
 }
 
 class Queen extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'Q');
 	}
 }
 
 class King extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
-	}
-}
-
-class Rook extends Piece {
-	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'K');
 	}
 }
 
 class Pawn extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
-		super(color, currentPosRow, currentPosCol);
+		super(color, currentPosRow, currentPosCol, 'P');
 	}
 }
