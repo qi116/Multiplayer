@@ -93,7 +93,7 @@ var simple=function(){
     };
    return textMultiple;
 }
-var a = 1
+
 
 var chessBoard = [
 	[new Rook('b', 0, 0), new Knight('b', 0, 1), new Bishop('b', 0, 2), new Queen('b', 0, 3), new King('b', 0, 4), new Bishop('b', 0, 5), new Knight('b', 0, 6), new Rook('b', 0, 7)],

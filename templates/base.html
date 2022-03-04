@@ -9,6 +9,7 @@
 	<h1> Multiplayer </h1>
 	
 	<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
+  <div class="sock_num"></div>
 	<div class="message_holder"></div>
 
 
@@ -46,6 +47,13 @@
           $( 'h3' ).remove()
           $( 'div.message_holder' ).append( '<div>'+msg.user_name+'</b> '+msg.message+'</div>' )
         }
+      })
+      socket.on( 'sock number', function( msg ) {
+        console.log( msg )
+        
+          
+        $( 'div.sock_num' ).append( '<div>'+ msg +'</div>' )
+        
       })
     </script>
 
