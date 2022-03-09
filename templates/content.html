@@ -16,7 +16,7 @@
 	<h1>
 		Hello
 	</h1>
-	<button type="button" onclick="printBoard()">Try it</button>
+	<button type="button">Try it</button>
 	<br>
 	<script type="text/javascript">
 		for (let i = 0; i < simple().board.length; i++) {
@@ -24,6 +24,14 @@
 			document.write(simple().board[i] + "<br>")
 		}
 	 
+	</script>
+	<button type="button">Move Piece</button>
+	<br>
+	<script type="text/javascript">
+		simple().move;
+		for (let i = 0; i < simple().board.length; i++) {
+			document.write(simple().board[i] + "<br>")
+		}
 	</script>
 </body>
 </html>

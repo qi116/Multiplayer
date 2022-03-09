@@ -3,47 +3,68 @@ class Piece {
 		this.color = color;
 		this.currentPosRow = currentPosRow;
 		this.currentPosCol = currentPosCol;
-		this.piece = piece
+		this.piece = piece;
 	}
 
 	get pieceColor() {
 		return this.color;
 	}
 
-	get piecePos() {
-		return this.currentPos;
+	get getRow() {
+		return this.currentPosRow;
+	}
+
+	get getCol() {
+		return this.currentPosCol;
 	}
 
 	toString() {
 		// if (this.currentPosCol == 7) {
 		// 	return this.piece + "<br>"
 		// }
-  		return this.piece;
+	  	return this.piece;
 	}
 
-	checkCapture(board) {
-		if (board[currentPosRow][currentPosCol] instanceof Piece) {
-			var otherPiece = board[currentPosRow][currentPosCol];
-			if (otherPiece.pieceColor() != this.pieceColor()) {
-				board[currentPosRow].splice(currentPosCol, 1);
-				board[currentPosRow][currentPosCol] = this;
-			} else {
-				return false; //illegal
-			}
-		} else {
-			//means the index is empty
-			if (board[currentPosRow][currentPosCol] == null) {
-				return false;
-			}
-		}
+	// checkCapture(board) {
+	// 	if (board[currentPosRow][currentPosCol] instanceof Piece) {
+	// 		var otherPiece = (Piece) board[currentPosRow][currentPosCol];
+	// 		if (otherPiece.pieceColor() != this.pieceColor()) {
+	// 			board[currentPosRow].splice(currentPosCol, 1);
+	// 			board[currentPosRow][currentPosCol] = this;
+	// 		} else {
+	// 			return false; //illegal
+	// 		}
+	// 	} else {
+	// 		//means the index is empty
+	// 		if (board[currentPosRow][currentPosCol] == null) {
+	// 			return false;
+	// 		}
+	// 	}
 
-		return true;
-	}
+	// 	return true;
+	// }
 }
 
 class Rook extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'R');
+	}
+
+	checkLegal(board, newRow, newCol) {
+		if ((board[newRow][newCol] == null)) {
+			return true;
+		}
+	}
+
+	movePiece(board, newRow, newCol) {
+		//console.log(super(getRow()));
+		if (this.checkLegal(board, newRow, newCol)) {
+			board[newRow][newCol] = this;
+			//board[super.getRow()][super.getCol()] = null;
+
+			currentPosRow = newRow;
+			currentPosCol = newCol;
+		}
 	}
 }
 
@@ -76,6 +97,7 @@ class Pawn extends Piece {
 		super(color, currentPosRow, currentPosCol, 'P');
 	}
 }
+
 function printBoard(board) {
 	// for (var row = 0 ; row < board.length ; row++) {
 	// 	for (var col = 0 ; col < board[0].length ; col++) {
@@ -89,7 +111,8 @@ function printBoard(board) {
 var simple=function(){
    var textMultiple = {
         board:chessBoard,
-        text2:"text2"
+        text2:"text2",
+        move: chessBoard[7][0].movePiece(chessBoard, 5, 0)
     };
    return textMultiple;
 }

@@ -11,7 +11,7 @@
 	<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
   <div class="sock_num"></div>
 	<div class="message_holder"></div>
-  
+
 
 	<form action="" method="post">
       <input type="text" class="username" placeholder="User Name"/>
@@ -19,6 +19,7 @@
       <input type="submit"/>
 	</form>
   <div>
+    <button onclick = "timeSwitch()"> Timer button </button>
     <p class = time1 style = text-align:center>
     a
     </p>
@@ -27,10 +28,14 @@
     </p>
   </div>
   
+  <script type = "text/javascript"> 
 
+   </script>
 	<script type="text/javascript">
       var socket = io.connect('http://' + document.domain + ':' + location.port);
-
+      function timeSwitch() {
+        socket.emit('timer')
+      }
       socket.on( 'connect', function() {
 
         
@@ -41,7 +46,7 @@
 
           let user_name = $( 'input.username' ).val()
           let user_input = $( 'input.message' ).val()
-          console.log('here')
+          //console.log('here')
 		
           socket.emit( 'my event', {
             user_name : user_name,
@@ -73,7 +78,12 @@
         console.log(obj.user)
         if(typeof obj.user !== 'undefined') {
           console.log('we made it')
-          $( 'p.time1').text(obj.time)
+          if (obj.user == 1) {
+            $( 'p.time1').text(obj.time)
+          } else if (obj.user == 2) {
+            $( 'p.time2').text(obj.time)
+          }
+          
         }
         
       })

@@ -14,6 +14,16 @@ class Piece {
 		return this.currentPos;
 	}
 
+	checkLegal(board, newRow, newCol) {
+		
+	}
+
+	movePiece(board, newRow, newCol) {
+		if (checkLegal(board, newRow, newCol)) {
+			
+		}
+	}
+
 	checkCapture(board) {
 		if (board[currentPosRow][currentPosCol] instanceof Piece) {
 			var otherPiece = (Piece) board[currentPosRow][currentPosCol];
@@ -37,6 +47,12 @@ class Piece {
 class Rook extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'R');
+	}
+
+	checkLegal(board, newRow, newCol) {
+		if ((board[newRow][newCol] != null) && (board[newRow][newCol].getColor() == this.getColor())) {
+			return false;
+		}
 	}
 }
 
