@@ -11,13 +11,22 @@
 	<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
   <div class="sock_num"></div>
 	<div class="message_holder"></div>
-
+  
 
 	<form action="" method="post">
       <input type="text" class="username" placeholder="User Name"/>
       <input type="text" class="message" placeholder="Messages"/>
       <input type="submit"/>
 	</form>
+  <div>
+    <p class = time1 style = text-align:center>
+    a
+    </p>
+    <p class = time2 style = text-align:center>
+    b
+    </p>
+  </div>
+  
 
 	<script type="text/javascript">
       var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -50,9 +59,22 @@
       })
       socket.on( 'sock number', function( msg ) {
         console.log( msg )
+        //var obj = JSON.parse(msg)
+        //console.log(obj)
         
           
         $( 'div.sock_num' ).append( '<div>'+ msg +'</div>' )
+        
+      })
+      socket.on( 'update time', function( msg ) {
+        
+        //console.log(typeof msg)
+        var obj = JSON.parse(msg)
+        console.log(obj.user)
+        if(typeof obj.user !== 'undefined') {
+          console.log('we made it')
+          $( 'p.time1').text(obj.time)
+        }
         
       })
     </script>
