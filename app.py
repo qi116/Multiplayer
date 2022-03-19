@@ -61,7 +61,7 @@ class Game(Thread): #I will try to do this without multi-threading. If it doesn'
 				self.done = True
 
 
-g = Game(60, 10) 
+g = Game(180, 10) 
 start = False
 
 @app.route('/')
