@@ -68,7 +68,7 @@
         //console.log(obj)
         
           
-        $( 'div.sock_num' ).append( '<div>'+ msg +'</div>' )
+        $( 'div.sock_num' ).text( msg )
         
       })
       socket.on( 'update time', function( msg ) {
