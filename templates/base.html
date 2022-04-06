@@ -4,15 +4,19 @@
 
   <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <title> Multiplayer </title>
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  <!-- <link rel = "stylesheet" type="text/css" href="./style.css"> -->
+  <link rel="shortcut icon" href="#">
 
 </head>
 <body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
-	<h1> Multiplayer </h1>
+	
+  <h1 class = "john"> Multiplayers </h1>
 	
 	<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
   <div class="sock_num"></div>
@@ -28,17 +32,110 @@
     <button onclick = "timeSwitch()"> Timer button </button>
     
   </div>
-  <div class="card" style="width:400px">
-    <p class = time1 style = text-align:center> a</p>
+  
+  <div class="card bg-light" style = "width:300px">
+    <div class="card-body text-center">
+      <p class = time1 style = text-align:center> a</p>
+    </div>
+  </div>
+  <br><br>
+  <div class = "card bg-dark" style="width:300px">
+    <div class="card-body text-center">
+      <p class = time2 style = "text-align:center; color:white"> b</p>
+    </div>
     
-    <!-- <div class="card-body">Basic card</div> -->
   </div>
-  <div class = "card" style="width:400px">
-    <p class = time2 style = text-align:center> b</p>
-  </div>
-  <script type = "text/javascript"> 
+  <a href="{{ url_for('chess') }}">FlaskApp</a>
 
-   </script>
+    <div class="content">
+        {% block content %} {% endblock %} 
+    </div> 
+
+  
+  <table>
+       <tr>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="0"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="1"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="2"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="3"></p></td>
+            </tr>
+            <tr>
+                <td><p class="red-piece" id="4"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="5"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="6"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="7"></p></td>
+                <td class="noPieceHere"></td>
+            </tr>
+            <tr>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="8"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="9"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="10"></p></td>
+                <td class="noPieceHere"></td>
+                <td><p class="red-piece" id="11"></p></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+            </tr>
+            <tr>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+                <td class="noPieceHere"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><span class="black-piece" id="12"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="13"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="14"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="15"></span></td>
+                <td class="noPieceHere"></td>
+            </tr>
+            <tr>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="16"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="17"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="18"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="19"></span></td>
+            </tr>
+            <tr>
+                <td><span class="black-piece" id="20"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="21"></span></td>
+                <td class="noPieceHere">
+                <td><span class="black-piece" id="22"></span></td>
+                <td class="noPieceHere"></td>
+                <td><span class="black-piece" id="23"></span></td>
+                <td class="noPieceHere"></td>
+            </tr>
+  </table>
+
+
 	<script type="text/javascript">
       var socket = io.connect('http://' + document.domain + ':' + location.port);
       function timeSwitch() {
@@ -54,7 +151,7 @@
 
           let user_name = $( 'input.username' ).val()
           let user_input = $( 'input.message' ).val()
-          //console.log('here')
+          
 		
           socket.emit( 'my event', {
             user_name : user_name,
@@ -72,27 +169,29 @@
       })
       socket.on( 'sock number', function( msg ) {
         console.log( msg )
-        //var obj = JSON.parse(msg)
-        //console.log(obj)
-        
           
         $( 'div.sock_num' ).append( '<div>'+ msg +'</div>' )
         
       })
       socket.on( 'update time', function( msg ) {
         
-        //console.log(typeof msg)
+        
         var obj = JSON.parse(msg)
         console.log(obj.user)
         if(typeof obj.user !== 'undefined') {
-          //console.log('we made it')
+
           var date = new Date(null);
           date.setSeconds(obj.time); // specify value for SECONDS here
           var result = date.toISOString().substr(11, 8);
+          var date2 = new Date(null)
+          date2.setSeconds(obj.other);
+          var resultO = date2.toISOString().substr(11, 8);
           if (obj.user == 1) {
             $( 'p.time1').text(result)
+            $( 'p.time2').text(resultO)
           } else if (obj.user == 2) {
             $( 'p.time2').text(result)
+            $( 'p.time1').text(resultO)
           }
           
         }
@@ -100,11 +199,7 @@
       })
     </script>
 
-	<a href="{{ url_for('chess') }}">FlaskApp</a>
-
-    <div class="content">
-        {% block content %} {% endblock %} 
-    </div> 
+	
   
     <!--<iframe src="content.html" height="200" width="300" title="Iframe Example"></iframe> -->
 </body>

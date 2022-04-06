@@ -45,14 +45,14 @@ class Game(Thread): #I will try to do this without multi-threading. If it doesn'
 
 			while self.turn == 1 and self.remaining1 > 0:
 				print("Player 1 time:" + str(self.remaining1))
-				data = {"user": 1, "time": self.remaining1}
+				data = {"user": 1, "time": self.remaining1, "other":self.remaining2}
 				json_f = json.dumps(data)
 				socketio.emit('update time', json_f)
 				time.sleep(1)
 				self.remaining1 -= 1
 			while self.turn == 2 and self.remaining2 > 0:
 				print("Player 2 time:" + str(self.remaining2))
-				data = {"user": 2, "time": self.remaining2}
+				data = {"user": 2, "time": self.remaining2, "other":self.remaining1}
 				json_f = json.dumps(data)
 				socketio.emit('update time', json_f)
 				time.sleep(1)
