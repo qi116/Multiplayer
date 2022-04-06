@@ -1,4 +1,20 @@
+* {
+    margin: auto;
+}
 h1 {
 	color:red;
 	background-color: blue;
+}
+.light {
+    background-color: #F0D2B4;
+}
+td {
+    text-align: center;
+    background-color: #BA7A3A;
+    width: 65px;
+    height: 65px;
+}
+.pawn {
+	width: 60%;
+	height: 60%;
 }
