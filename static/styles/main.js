@@ -4,17 +4,18 @@ class Piece {
 		this.currentPosRow = currentPosRow;
 		this.currentPosCol = currentPosCol;
 		this.piece = piece;
+		//console.log(currentPosRow);
 	}
 
 	get pieceColor() {
 		return this.color;
 	}
 
-	get getRow() {
+	getRow() {
 		return this.currentPosRow;
 	}
 
-	get getCol() {
+	getCol() {
 		return this.currentPosCol;
 	}
 
@@ -54,16 +55,17 @@ class Rook extends Piece {
 		if ((board[newRow][newCol] == null)) {
 			return true;
 		}
+		return false;
 	}
 
 	movePiece(board, newRow, newCol) {
 		//console.log(super(getRow()));
 		if (this.checkLegal(board, newRow, newCol)) {
 			board[newRow][newCol] = this;
-			//board[super.getRow()][super.getCol()] = null;
+			board[this.getRow()][this.getCol()] = null;
 
-			currentPosRow = newRow;
-			currentPosCol = newCol;
+			super.currentPosRow = newRow;
+			super.currentPosCol = newCol;
 		}
 	}
 }
@@ -109,11 +111,13 @@ function printBoard(board) {
 }
 
 var simple=function(){
+   console.log(chessBoard[7][0])
    var textMultiple = {
         board:chessBoard,
         text2:"text2",
         move: chessBoard[7][0].movePiece(chessBoard, 5, 0)
     };
+    console.log(chessBoard[7][0])
    return textMultiple;
 }
 
