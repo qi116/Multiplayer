@@ -170,6 +170,11 @@
               
               prevImage.src = ""
               prevImage.className = ""
+
+              socket.emit('addMove', {
+                from: oldID,
+                to: td.id
+              })
             }
             else {
               console.log("illegal")
@@ -240,6 +245,31 @@
           
         }
         
+      })
+
+      function sendPiece(json) {
+          console.log("HELLO")
+          var obj = json;
+          var from = obj.from;
+          var to = obj.to;
+
+          var myTd1 = document.getElementById(from);
+          var myTd2 = document.getElementById(to);
+          var myimg1 = myTd1.getElementsByTagName('img')[0];
+          var myimg2 = myTd2.getElementsByTagName('img')[0];
+
+          if (movePiece(from, to)) {
+              console.log("legal")
+              myimg2.src = myimg1.src;
+              myimg1.src = "";
+              myimg2.className = myimg1.className;
+              myimg1.className = "";
+              
+          }      
+      }
+
+      socket.on('add move', function(message){
+        sendPiece(message);
       })
     </script>
 
