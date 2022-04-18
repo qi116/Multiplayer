@@ -61,7 +61,7 @@ class Game(Thread): #I will try to do this without multi-threading. If it doesn'
 				self.done = True
 
 
-g = Game(180, 10) 
+g = Game(180, 10)
 start = False
 
 @app.route('/')
@@ -110,6 +110,11 @@ def time_send(methods = ['GET', 'POST']):
 		
 	else:
 		g.changeTurn()
-	
+
+@socketio.on('addMove')
+def send_move(json, methods = ['GET', 'POST']):
+	print(json)
+	socketio.emit('add move', json, callback=messageReceived)
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, port = 8000)
