@@ -115,7 +115,7 @@ var simple=function(){
    var textMultiple = {
         board:chessBoard,
         text2:"text2",
-        move: chessBoard[7][0].movePiece(chessBoard, 5, 0)
+        move: chessBoard[7][1].movePiece(chessBoard, 5, 0)
     };
     console.log(chessBoard[7][0])
    return textMultiple;
