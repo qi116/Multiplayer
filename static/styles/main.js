@@ -52,7 +52,7 @@ class Rook extends Piece {
 	}
 
 	checkLegal(board, newRow, newCol) {
-		if ((board[newRow][newCol] == null)) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
 			return true;
 		}
 		return false;
@@ -66,7 +66,9 @@ class Rook extends Piece {
 
 			super.currentPosRow = newRow;
 			super.currentPosCol = newCol;
+			return true;
 		}
+		return false;
 	}
 }
 
@@ -76,9 +78,10 @@ class Knight extends Piece {
 	}
 
 	checkLegal(board, newRow, newCol) {
-		if ((board[newRow][newCol] == null)) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
 			return true;
 		}
+		console.log("fail")
 		return false;
 	}
 
@@ -90,7 +93,9 @@ class Knight extends Piece {
 
 			super.currentPosRow = newRow;
 			super.currentPosCol = newCol;
+			return true;
 		}
+		return false;
 	}
 }
 
@@ -100,7 +105,7 @@ class Bishop extends Piece {
 	}
 
 	checkLegal(board, newRow, newCol) {
-		if ((board[newRow][newCol] == null)) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
 			return true;
 		}
 		return false;
@@ -114,7 +119,9 @@ class Bishop extends Piece {
 
 			super.currentPosRow = newRow;
 			super.currentPosCol = newCol;
+			return true;
 		}
+		return false;
 	}
 }
 
@@ -122,17 +129,74 @@ class Queen extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'Q');
 	}
+	checkLegal(board, newRow, newCol) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
+			return true;
+		}
+		return false;
+	}
+
+	movePiece(board, newRow, newCol) {
+		//console.log(super(getRow()));
+		if (this.checkLegal(board, newRow, newCol)) {
+			board[newRow][newCol] = this;
+			board[this.getRow()][this.getCol()] = null;
+
+			super.currentPosRow = newRow;
+			super.currentPosCol = newCol;
+			return true;
+		}
+		return false;
+	}
 }
 
 class King extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'K');
 	}
+	checkLegal(board, newRow, newCol) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
+			return true;
+		}
+		return false;
+	}
+
+	movePiece(board, newRow, newCol) {
+		//console.log(super(getRow()));
+		if (this.checkLegal(board, newRow, newCol)) {
+			board[newRow][newCol] = this;
+			board[this.getRow()][this.getCol()] = null;
+
+			super.currentPosRow = newRow;
+			super.currentPosCol = newCol;
+			return true;
+		}
+		return false;
+	}
 }
 
 class Pawn extends Piece {
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'P');
+	}
+	checkLegal(board, newRow, newCol) {
+		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
+			return true;
+		}
+		return false;
+	}
+
+	movePiece(board, newRow, newCol) {
+		//console.log(super(getRow()));
+		if (this.checkLegal(board, newRow, newCol)) {
+			board[newRow][newCol] = this;
+			board[this.getRow()][this.getCol()] = null;
+
+			super.currentPosRow = newRow;
+			super.currentPosCol = newCol;
+			return true;
+		}
+		return false;
 	}
 }
 
@@ -168,7 +232,7 @@ var chessBoard = [
 ];
 
 var movePiece=function(oldId, newId){
-   chessBoardMovePiece(oldId, newId)
+   return chessBoardMovePiece(oldId, newId)
 }
 
 
@@ -178,7 +242,17 @@ function chessBoardMovePiece(id, newId) {
 
 	var newRow = parseInt(newId[0])
 	var newCol = parseInt(newId[1])
+	if (chessBoard[row][col] != null) {
+		console.log("here")
+		var a= chessBoard[row][col].movePiece(chessBoard, newRow, newCol);
+		console.log(a)
+		return a;
 
-	chessBoard[row][col].movePiece(chessBoard, newRow, newCol);
+	}
+
+	else {
+		console.log("what");
+		return false;
+	} 
 }
 

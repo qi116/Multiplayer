@@ -15,6 +15,18 @@ td {
     height: 65px;
 }
 .pawn {
-	width: 60%;
-	height: 60%;
+	width: 90%;
+	height: 90%;
+}
+.bishop {
+	width: 90%;
+	height: 90%;
+}
+.king {
+	width: 90%;
+	height: 90%;
+}
+.queen {
+	width: 90%;
+	height: 90%;
 }
