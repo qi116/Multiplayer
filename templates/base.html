@@ -220,7 +220,6 @@
       })
       socket.on( 'update time', function( msg ) {
         
-        
         var obj = JSON.parse(msg)
         console.log(obj.user)
         if(typeof obj.user !== 'undefined') {
