@@ -10,11 +10,12 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
   <!-- <link rel = "stylesheet" type="text/css" href="./style.css"> -->
   <link rel="shortcut icon" href="#">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+  <script src="{{url_for('static', filename='styles/main.js')}}"></script>
 
 </head>
 <body>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
 	
   <h1 class = "john"> Multiplayers </h1>
 	
@@ -33,15 +34,15 @@
     
   </div>
   
-  <div class="card bg-light" style = "width:300px">
+  <div class="card bg-dark" style = "width:300px">
     <div class="card-body text-center">
       <p class = time1 style = text-align:center> a</p>
     </div>
   </div>
   <br><br>
-  <div class = "card bg-dark" style="width:300px">
+  <div class = "card bg-light" style="width:300px">
     <div class="card-body text-center">
-      <p class = time2 style = "text-align:center; color:white"> b</p>
+      <p class = time2 style = "text-align:center; color:light"> b</p>
     </div>
     
   </div>
@@ -54,89 +55,133 @@
   
   <table>
        <tr>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="0"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="1"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="2"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="3"></p></td>
+                <td class="light" id = "00" onclick = "moveImage(this)"><img src="static/styles/img/rook-d.png" class = "rook"  ></td>
+                <td class="dark" id = "01" onclick = "moveImage(this)"><img src="static/styles/img/knight-d.png" class = "knight" ></td>
+                <td class="light" id = "02" onclick = "moveImage(this)"> <img src="static/styles/img/bishop-d.png" class = "bishop"  ></td>
+                <td class = "dark" id = "03" onclick = "moveImage(this)"><img src="static/styles/img/queen-d.png" class = "queen"  ></td>
+                <td class="light" id = "04" onclick = "moveImage(this)"><img src="static/styles/img/king-d.png" class = "king"  ></td>
+                <td class="dark" id="05" onclick = "moveImage(this)"><img src="static/styles/img/bishop-d.png" class = "bishop"  ></td>
+                <td class="light" id = "06" onclick = "moveImage(this)"><img src="static/styles/img/knight-d.png" class = "knight"  ></td>
+                <td class="dark" id="07" onclick = "moveImage(this)"><img src="static/styles/img/rook-d.png" class = "rook"></td>
             </tr>
             <tr>
-                <td><p class="red-piece" id="4"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="5"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="6"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="7"></p></td>
-                <td class="noPieceHere"></td>
+                <td class="dark" id="10" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class="light" id = "11" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class="dark" id = "12" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn" ></td>
+                <td class="light" id = "13" onclick = "moveImage(this)"> <img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class = "dark" id = "14" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class="light" id = "15" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class="dark" id="16" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                <td class="light" id = "17" onclick = "moveImage(this)"><img src="static/styles/img/pawn-d.png" class = "pawn"  ></td>
+                
             </tr>
             <tr>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="8"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="9"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="10"></p></td>
-                <td class="noPieceHere"></td>
-                <td><p class="red-piece" id="11"></p></td>
+                <td class="light" id = "20" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id = "21" onclick = "moveImage(this)"><img src="" class = "" ></td>
+                <td class="light" id = "22" onclick = "moveImage(this)"> <img src="" class = ""  ></td>
+                <td class = "dark" id = "23" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "24" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="25" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "26" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="27" onclick = "moveImage(this)"><img src="" class = ""  ></td>
             </tr>
             <tr>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
+                <<td class="dark" id="30" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "31" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id = "32" onclick = "moveImage(this)"><img src="" class = "" ></td>
+                <td class="light" id = "33" onclick = "moveImage(this)"> <img src="" class = ""  ></td>
+                <td class = "dark" id = "34" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "35" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="36" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "37" onclick = "moveImage(this)"><img src="" class = ""  ></td>
             </tr>
             <tr>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
-                <td class="noPieceHere"></td>
-                <td></td>
+                <td class="light" id = "40" onclick = "moveImage(this)"></td>
+                <td class="dark" id = "41" onclick = "moveImage(this)"><img src="" class = "" ></td>
+                <td class="light" id = "42" onclick = "moveImage(this)"> <img src="" class = ""  ></td>
+                <td class = "dark" id = "43" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "44" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="45" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "46" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="47" onclick = "moveImage(this)"><img src="" class = ""  ></td>
             </tr>
             <tr>
-                <td><span class="black-piece" id="12"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="13"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="14"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="15"></span></td>
-                <td class="noPieceHere"></td>
+                <td class="dark" id="50" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "51" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id = "52" onclick = "moveImage(this)"><img src="" class = "" ></td>
+                <td class="light" id = "53" onclick = "moveImage(this)"> <img src="" class = ""  ></td>
+                <td class = "dark" id = "54" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "55" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="dark" id="56" onclick = "moveImage(this)"><img src="" class = ""  ></td>
+                <td class="light" id = "57" onclick = "moveImage(this)"><img src="" class = ""  ></td>
             </tr>
             <tr>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="16"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="17"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="18"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="19"></span></td>
+                <td class="light" id = "60" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class="dark" id = "61" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn" ></td>
+                <td class="light" id = "62" onclick = "moveImage(this)"> <img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class = "dark" id = "63" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class="light" id = "64" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class="dark" id="65" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class="light" id = "66" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
+                <td class="dark" id="67" onclick = "moveImage(this)"><img src="static/styles/img/pawn-l.png" class = "pawn"  ></td>
             </tr>
             <tr>
-                <td><span class="black-piece" id="20"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="21"></span></td>
-                <td class="noPieceHere">
-                <td><span class="black-piece" id="22"></span></td>
-                <td class="noPieceHere"></td>
-                <td><span class="black-piece" id="23"></span></td>
-                <td class="noPieceHere"></td>
+                <td class="dark" id="70" onclick = "moveImage(this)"><img src="static/styles/img/rook-l.png" class = "rook"  ></td>
+                <td class="light" id = "71" onclick = "moveImage(this)"><img src="static/styles/img/knight-l.png" class = "knight"  ></td>
+                <td class="dark" id = "72" onclick = "moveImage(this)"><img src="static/styles/img/bishop-l.png" class = "bishop" ></td>
+                <td class="light" id = "73" onclick = "moveImage(this)"> <img src="static/styles/img/queen-l.png" class = "queen"  ></td>
+                <td class = "dark" id = "74" onclick = "moveImage(this)"><img src="static/styles/img/king-l.png" class = "king"  ></td>
+                <td class="light" id = "75" onclick = "moveImage(this)"><img src="static/styles/img/bishop-l.png" class = "bishop"  ></td>
+                <td class="dark" id="76" onclick = "moveImage(this)"><img src="static/styles/img/knight-l.png" class = "knight"  ></td>
+                <td class="light" id = "77" onclick = "moveImage(this)"><img src="static/styles/img/rook-l.png" class = "rook"  ></td>
             </tr>
+
+
   </table>
+   <br><br><br>
 
-
+  <script type="text/javascript">
+      var prevImage = null
+      var selectedId = ""
+      var selectedClass = ""
+      var oldID = ""
+      function moveImage(td) {
+          var myTd = document.getElementById(td.id);
+          var myimg = myTd.getElementsByTagName('img')[0];
+          if (selectedId == "") {
+            if (myimg.className == "") {
+              return
+            }
+            selectedId = myimg.src
+            oldID = td.id
+            selectedClass = myimg.className
+            prevImage = myimg
+          } else {
+            if (td.id == oldID) {
+              selectedId = ""
+              selectedClass = ""
+              return
+            }
+            
+            if (movePiece(oldID, td.id)) {
+              console.log("legal")
+              myimg.src = selectedId
+              myimg.className = selectedClass
+              
+              prevImage.src = ""
+              prevImage.className = ""
+            }
+            else {
+              console.log("illegal")
+            }
+            selectedId = ""
+            selectedClass = ""
+          }
+      }
+  </script>
 	<script type="text/javascript">
+
+
       var socket = io.connect('http://' + document.domain + ':' + location.port);
       function timeSwitch() {
         socket.emit('timer')

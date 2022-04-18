@@ -1,4 +1,32 @@
+* {
+    margin: auto;
+}
 h1 {
 	color:red;
 	background-color: blue;
+}
+.light {
+    background-color: #F0D2B4;
+}
+td {
+    text-align: center;
+    background-color: #BA7A3A;
+    width: 65px;
+    height: 65px;
+}
+.pawn {
+	width: 90%;
+	height: 90%;
+}
+.bishop {
+	width: 90%;
+	height: 90%;
+}
+.king {
+	width: 90%;
+	height: 90%;
+}
+.queen {
+	width: 90%;
+	height: 90%;
 }
