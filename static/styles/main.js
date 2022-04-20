@@ -47,12 +47,25 @@ class Piece {
 }
 
 class Rook extends Piece {
+	moved = false
+	getMoved() {
+		return this.moved;
+	}
+	setMoved() {
+		this.moved = true;
+	}
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'R');
 	}
 
 	checkLegal(board, newRow, newCol) {
+		console.log("hello bro")
 		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
+			var king = board[this.getRow()][this.getCol() - 1]
+			if (king != null && king.toString() == 'K' && king.getCastling()) {
+				king.setCastling()
+				return true;
+			}
 			if ((newCol == this.getCol())) {
 				var max = Math.max(this.getRow() , newRow);
 				var min = Math.min(this.getRow(), newRow);
@@ -79,7 +92,9 @@ class Rook extends Piece {
 
 	movePiece(board, newRow, newCol) {
 		//console.log(super(getRow()));
-		if (this.checkLegal(board, newRow, newCol)) {
+		var hold = this.checkLegal(board, newRow, newCol)
+		console.log("this: " + hold)
+		if (hold) {
 			board[newRow][newCol] = this;
 			board[this.getRow()][this.getCol()] = null;
 
@@ -182,6 +197,7 @@ class Queen extends Piece {
 	}
 	checkLegal(board, newRow, newCol) {
 		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
+			
 			if ((newCol == this.getCol())) {
 				var max = Math.max(this.getRow() , newRow);
 				var min = Math.min(this.getRow(), newRow);
@@ -249,6 +265,14 @@ class Queen extends Piece {
 }
 
 class King extends Piece {
+	moved = false
+	castling = false
+	getCastling() {
+		return this.castling
+	}
+	setCastling() {
+		this.castling = false
+	}
 	constructor(color, currentPosRow, currentPosCol) {
 		super(color, currentPosRow, currentPosCol, 'K');
 	}
@@ -256,6 +280,21 @@ class King extends Piece {
 		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
 			if (Math.abs(newRow - this.getRow()) <= 1 && Math.abs(newCol - this.getCol()) <= 1) {
 				return true;
+			}
+		}
+		//king side castling
+		if ((board[newRow][newCol] == null) && (this.getRow() == newRow) && (!this.moved) &&(newCol - this.getCol() == 2)) {
+			this.moved = true;
+			if ((board[this.getRow()][this.getCol() + 1] == null)) { //checks next to square
+				var a = board[this.getRow()][this.getCol() + 3]
+				if (board[this.getRow()][this.getCol() + 3].toString() == 'R') {
+					if (!a.getMoved()) {
+						a.setMoved()
+						this.castling = true
+						//a.movePiece(board, this.getRow(), this.getCol() + 1)
+						return true;
+					}
+				}
 			}
 		}
 		return false;
@@ -360,7 +399,7 @@ var simple=function(){
         text2:"text2",
         move: chessBoard[7][1].movePiece(chessBoard, 5, 0)
     };
-    console.log(chessBoard[7][0])
+    //console.log(chessBoard[7][0])
    return textMultiple;
 }
 
@@ -379,6 +418,25 @@ var movePiece=function(oldId, newId){
    return chessBoardMovePiece(oldId, newId)
 }
 
+var isCastle=function(oldId, newId) {
+	console.log(oldId)
+	var row = parseInt(oldId[0])
+	var col = parseInt(oldId[1])
+
+	var newRow = parseInt(newId[0])
+	var newCol = parseInt(newId[1])
+
+	if (chessBoard[newRow][newCol] != null && chessBoard[newRow][newCol].toString() == 'K') {
+		var bool = chessBoard[newRow][newCol].getCastling();
+		//chessBoard[row][col].setCastling()
+		console.log("is king")
+		return bool;
+	}
+	else {
+		console.log("isn't king")
+		return false;
+	}
+}
 
 function chessBoardMovePiece(id, newId) {
 	var row = parseInt(id[0])
@@ -387,9 +445,9 @@ function chessBoardMovePiece(id, newId) {
 	var newRow = parseInt(newId[0])
 	var newCol = parseInt(newId[1])
 	if (chessBoard[row][col] != null) {
-		console.log("here")
+		//console.log("here")
 		var a= chessBoard[row][col].movePiece(chessBoard, newRow, newCol);
-		console.log(a)
+		//console.log(a)
 		return a;
 
 	}

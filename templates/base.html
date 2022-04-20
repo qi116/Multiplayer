@@ -36,7 +36,7 @@
   
   <div class="card bg-dark" style = "width:300px">
     <div class="card-body text-center">
-      <p class = time1 style = text-align:center> a</p>
+      <p class = time1 style = "text-align:center; color: #fff"> a</p>
     </div>
   </div>
   <br><br>
@@ -145,6 +145,10 @@
       var selectedId = ""
       var selectedClass = ""
       var oldID = ""
+
+      var makeMove = null;
+      var turn = 1;
+
       function moveImage(td) {
           var myTd = document.getElementById(td.id);
           var myimg = myTd.getElementsByTagName('img')[0];
@@ -162,19 +166,54 @@
               selectedClass = ""
               return
             }
-            
-            if (movePiece(oldID, td.id)) {
-              console.log("legal")
-              myimg.src = selectedId
-              myimg.className = selectedClass
-              
-              prevImage.src = ""
-              prevImage.className = ""
 
-              socket.emit('addMove', {
-                from: oldID,
-                to: td.id
-              })
+            var color;
+            var arr = prevImage.src.split('-');
+            if (arr[1].charAt(0) == 'l') {
+              color = 1;
+            }
+            else {
+              color = 2;
+            }
+
+            socket.emit('myTurn', color)
+
+            if (turn == color) {
+              if (movePiece(oldID, td.id)) {
+
+                timeSwitch()
+                myimg.src = selectedId
+                myimg.className = selectedClass
+                
+                prevImage.src = ""
+                prevImage.className = ""
+
+                socket.emit('addMove', {
+                  from: oldID,
+                  to: td.id
+                })
+
+                
+                if (isCastle(oldID, td.id)) {
+                  var o1 = oldID.charAt(0)
+                  var o2 = parseInt(oldID.charAt(1));
+                  o2 += 3; //moves col to rook
+                  var nextToKing = o2 - 2; //col next to king
+                  var oldIdRook = o1.toString() + o2.toString()
+                  var newIdRook = o1.toString() + nextToKing.toString()
+                  var js = {"from" : oldIdRook, "to" : newIdRook}
+                  sendPiece(js);
+                  selectedId = ""
+                  selectedClass = ""
+                  return;
+                }
+                if (turn == 1) {
+                  turn = 2;
+                }
+                else {
+                  turn = 1;
+                }
+              }
             }
             else {
               console.log("illegal")
@@ -183,6 +222,34 @@
             selectedClass = ""
           }
       }
+
+      function sendPiece(json) {
+          console.log("HELLO")
+          var obj = json;
+          var from = obj.from;
+          var to = obj.to;
+
+          var myTd1 = document.getElementById(from);
+          var myTd2 = document.getElementById(to);
+          var myimg1 = myTd1.getElementsByTagName('img')[0];
+          var myimg2 = myTd2.getElementsByTagName('img')[0];
+
+          if (movePiece(from, to)) {
+                console.log("legal")
+                myimg2.src = myimg1.src;
+                myimg1.src = "";
+                myimg2.className = myimg1.className;
+                myimg1.className = "";
+
+                if (turn == 1) {
+                  turn = 2;
+                }
+                else {
+                  turn = 1;
+                }
+          }
+      }
+
   </script>
 	<script type="text/javascript">
 
@@ -247,26 +314,10 @@
         
       })
 
-      function sendPiece(json) {
-          console.log("HELLO")
-          var obj = json;
-          var from = obj.from;
-          var to = obj.to;
-
-          var myTd1 = document.getElementById(from);
-          var myTd2 = document.getElementById(to);
-          var myimg1 = myTd1.getElementsByTagName('img')[0];
-          var myimg2 = myTd2.getElementsByTagName('img')[0];
-
-          if (movePiece(from, to)) {
-              console.log("legal")
-              myimg2.src = myimg1.src;
-              myimg1.src = "";
-              myimg2.className = myimg1.className;
-              myimg1.className = "";
-              
-          }      
-      }
+      socket.on('check turn', function (value) {
+        makeMove = value
+        console.log("b")
+      })
 
       socket.on('add move', function(message){
         sendPiece(message);
