@@ -59,7 +59,6 @@ class Rook extends Piece {
 	}
 
 	checkLegal(board, newRow, newCol) {
-		console.log("hello bro")
 		if ((board[newRow][newCol] == null) || (board[newRow][newCol]).color != this.color) {
 			var king = board[this.getRow()][this.getCol() - 1]
 			if (king != null && king.toString() == 'K' && king.getCastling()) {
@@ -91,9 +90,8 @@ class Rook extends Piece {
 	}
 
 	movePiece(board, newRow, newCol) {
-		//console.log(super(getRow()));
 		var hold = this.checkLegal(board, newRow, newCol)
-		console.log("this: " + hold)
+		
 		if (hold) {
 			board[newRow][newCol] = this;
 			board[this.getRow()][this.getCol()] = null;
@@ -126,7 +124,6 @@ class Knight extends Piece {
 	}
 
 	movePiece(board, newRow, newCol) {
-		//console.log(super(getRow()));
 		if (this.checkLegal(board, newRow, newCol)) {
 			board[newRow][newCol] = this;
 			board[this.getRow()][this.getCol()] = null;
@@ -419,7 +416,6 @@ var movePiece=function(oldId, newId){
 }
 
 var isCastle=function(oldId, newId) {
-	console.log(oldId)
 	var row = parseInt(oldId[0])
 	var col = parseInt(oldId[1])
 
@@ -429,11 +425,9 @@ var isCastle=function(oldId, newId) {
 	if (chessBoard[newRow][newCol] != null && chessBoard[newRow][newCol].toString() == 'K') {
 		var bool = chessBoard[newRow][newCol].getCastling();
 		//chessBoard[row][col].setCastling()
-		console.log("is king")
 		return bool;
 	}
 	else {
-		console.log("isn't king")
 		return false;
 	}
 }
@@ -453,7 +447,6 @@ function chessBoardMovePiece(id, newId) {
 	}
 
 	else {
-		console.log("what");
 		return false;
 	} 
 }

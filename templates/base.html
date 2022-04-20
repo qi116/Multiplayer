@@ -224,7 +224,6 @@
       }
 
       function sendPiece(json) {
-          console.log("HELLO")
           var obj = json;
           var from = obj.from;
           var to = obj.to;
@@ -235,7 +234,6 @@
           var myimg2 = myTd2.getElementsByTagName('img')[0];
 
           if (movePiece(from, to)) {
-                console.log("legal")
                 myimg2.src = myimg1.src;
                 myimg1.src = "";
                 myimg2.className = myimg1.className;
