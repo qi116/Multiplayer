@@ -169,7 +169,6 @@
 
             var color;
             var arr = prevImage.src.split('-');
-            console.log(arr)
             if (arr[1].charAt(0) == 'l') {
               color = 1;
             }
@@ -180,8 +179,8 @@
             socket.emit('myTurn', color)
 
             if (turn == color) {
-              console.log("a")
               if (movePiece(oldID, td.id)) {
+
                 timeSwitch()
                 myimg.src = selectedId
                 myimg.className = selectedClass
@@ -194,6 +193,20 @@
                   to: td.id
                 })
 
+                
+                if (isCastle(oldID, td.id)) {
+                  var o1 = oldID.charAt(0)
+                  var o2 = parseInt(oldID.charAt(1));
+                  o2 += 3; //moves col to rook
+                  var nextToKing = o2 - 2; //col next to king
+                  var oldIdRook = o1.toString() + o2.toString()
+                  var newIdRook = o1.toString() + nextToKing.toString()
+                  var js = {"from" : oldIdRook, "to" : newIdRook}
+                  sendPiece(js);
+                  selectedId = ""
+                  selectedClass = ""
+                  return;
+                }
                 if (turn == 1) {
                   turn = 2;
                 }
@@ -211,7 +224,6 @@
       }
 
       function sendPiece(json) {
-          console.log("HELLO")
           var obj = json;
           var from = obj.from;
           var to = obj.to;
@@ -222,7 +234,6 @@
           var myimg2 = myTd2.getElementsByTagName('img')[0];
 
           if (movePiece(from, to)) {
-                console.log("legal")
                 myimg2.src = myimg1.src;
                 myimg1.src = "";
                 myimg2.className = myimg1.className;
@@ -278,7 +289,6 @@
         
       })
       socket.on( 'update time', function( msg ) {
-        
         
         var obj = JSON.parse(msg)
         console.log(obj.user)

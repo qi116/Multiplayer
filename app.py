@@ -111,19 +111,10 @@ def time_send(methods = ['GET', 'POST']):
 	else:
 		g.changeTurn()
 
-@socketio.on('addMove')
+@socketio.on('addMove')	
 def send_move(json, methods = ['GET', 'POST']):
 	print(json)
 	socketio.emit('add move', json, callback=messageReceived)
-
-
-@socketio.on('myTurn')
-def check_turn(accept, methods = ['GET', 'POST']):
-	print("accept: ", accept)
-	if (accept == g.turn):
-		socketio.emit('check turn', True, callback=messageReceived)
-	else:
-		socketio.emit('check turn', False, callback=messageReceived)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, port = 8000, host = "0.0.0.0")
