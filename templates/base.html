@@ -193,6 +193,19 @@
                   to: td.id
                 })
 
+                if (myimg.className == "pawn") {
+                  var row = td.id.charAt(0);
+                  console.log("row: ", row);
+                  if (row == '0' || row == '7') {
+                    if (color == 1) {
+                      myimg.src = "static/styles/img/queen-l.png";
+                    }
+                    else {
+                      myimg.src = "static/styles/img/queen-d.png"; 
+                    }
+                    myimg.className = "queen";
+                  }
+                }
                 
                 if (isCastle(oldID, td.id)) {
                   var o1 = oldID.charAt(0)
@@ -203,6 +216,9 @@
                   var newIdRook = o1.toString() + nextToKing.toString()
                   var js = {"from" : oldIdRook, "to" : newIdRook}
                   sendPiece(js);
+
+                  socket.emit('addMove', js);
+
                   selectedId = ""
                   selectedClass = ""
                   return;
@@ -233,11 +249,45 @@
           var myimg1 = myTd1.getElementsByTagName('img')[0];
           var myimg2 = myTd2.getElementsByTagName('img')[0];
 
+          var color;
+          var arr;
+          if (myimg1.src.includes("png")) {
+            arr = myimg1.src.split('-')
+          }
+          else {
+            console.log("bottom");
+            arr = myimg2.src.split('-')
+          }
+          
+          if (arr[1].charAt(0) == 'l') {
+            color = 1;
+          }
+          else {
+            color = 2;
+          }
+
           if (movePiece(from, to)) {
                 myimg2.src = myimg1.src;
                 myimg1.src = "";
                 myimg2.className = myimg1.className;
                 myimg1.className = "";
+
+                console.log(myimg2.className);
+
+
+                if (myimg2.className == "pawn") {
+                  var row = to.charAt(0);
+                  console.log("row: ", row);
+                  if (row == '0' || row == '7') {
+                    if (color == 1) {
+                      myimg2.src = "static/styles/img/queen-l.png";
+                    }
+                    else {
+                      myimg2.src = "static/styles/img/queen-d.png"; 
+                    }
+                    myimg2.className = "queen";
+                  }
+                }
 
                 if (turn == 1) {
                   turn = 2;

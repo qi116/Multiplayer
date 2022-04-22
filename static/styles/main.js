@@ -7,7 +7,7 @@ class Piece {
 		//console.log(currentPosRow);
 	}
 
-	get pieceColor() {
+	pieceColor() {
 		return this.color;
 	}
 
@@ -366,9 +366,23 @@ class Pawn extends Piece {
 		return false;
 	}
 
+	isPromotion(row, col) {
+		if (row == 0 || row == 7) {
+			return true;
+		}
+		return false;
+	}
+
 	movePiece(board, newRow, newCol) {
 		//console.log(super(getRow()));
 		if (this.checkLegal(board, newRow, newCol)) {
+			if (this.isPromotion(newRow, newCol)) {
+				board[newRow][newCol] = new Queen(this.pieceColor(), newRow, newCol);
+				board[newRow][newCol].currentPosRow = newRow;
+				board[newRow][newCol].currentPosCol = newCol;
+				board[this.getRow()][this.getCol()] = null;
+				return true;
+			}
 			board[newRow][newCol] = this;
 			board[this.getRow()][this.getCol()] = null;
 
